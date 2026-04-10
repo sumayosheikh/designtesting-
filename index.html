@@ -727,6 +727,19 @@
       }
     });
   </script>
+
+</head>
+<body>
+
+  <h1 id="riskScore">72 / 100</h1>
+
+  <script>
+    function updateDashboard() {
+      let risk = Math.floor(Math.random() * 20) + 65;
+      document.getElementById("riskScore").innerText = risk + " / 100";
+    }
+
+    setInterval(updateDashboard, 5000);
   <script>
 function updateDashboard() {
   let risk = Math.floor(Math.random() * 20) + 65;
