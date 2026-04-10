@@ -1,52 +1,437 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<style>
-body {
-  margin:0;
-  font-family: Arial;
-  background:#05080c;
-  color:#00ffcc;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Management Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-.hero {
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
+    body {
+      background: #f4f5f9;
+      color: #1f1f2e;
+    }
 
-h1 {
-  font-size:60px;
-}
+    .dashboard {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
 
-.panel {
-  margin-top:40px;
-  width:70%;
-  background:#0d141c;
-  padding:30px;
-  border-radius:15px;
-}
+    .sidebar {
+      background: linear-gradient(180deg, #1a103d, #24104f);
+      color: white;
+      padding: 24px 18px;
+    }
 
-.line {
-  margin:10px 0;
-  border-bottom:1px solid #00ffcc33;
-}
-</style>
+    .sidebar h2 {
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: #d7cbff;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #ddd7ff;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .sidebar li:hover,
+    .sidebar li.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .main {
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .topbar h1 {
+      font-size: 28px;
+      color: #2a2452;
+    }
+
+    .filters {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filters select,
+    .filters button {
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: white;
+      font-size: 14px;
+    }
+
+    .filters button {
+      background: #f02cb3;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 26px 0 14px;
+      color: #2a2452;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .kpi-card {
+      background: #25114d;
+      color: white;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 6px 18px rgba(37, 17, 77, 0.12);
+    }
+
+    .kpi-card h3 {
+      font-size: 14px;
+      font-weight: normal;
+      margin-bottom: 14px;
+      color: #d8d1ff;
+    }
+
+    .kpi-card .value {
+      font-size: 38px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .kpi-card .change {
+      font-size: 13px;
+      color: #4cff87;
+    }
+
+    .kpi-card .negative {
+      color: #ff6161;
+    }
+
+    .chart-card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+      margin-bottom: 22px;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .chart-card h3 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: #2a2452;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    .small-chart canvas {
+      height: 260px !important;
+    }
+
+    @media (max-width: 1100px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <h2>Dashboards</h2>
+      <ul>
+        <li>Demand Planning Dashboard</li>
+        <li class="active">Inventory Management Dashboard</li>
+        <li>Order Management Dashboard</li>
+        <li>Supplier Management Dashboard</li>
+        <li>Supply Chain Risk Dashboard</li>
+        <li>Transportation & Logistics</li>
+      </ul>
+    </aside>
 
-<div class="hero">
-  <h1>AI COMMAND</h1>
+    <main class="main">
+      <div class="topbar">
+        <h1>Inventory Management Dashboard</h1>
+        <div class="filters">
+          <select>
+            <option>Last year</option>
+            <option>Last 6 months</option>
+            <option>Last 30 days</option>
+          </select>
+          <select>
+            <option>All categories</option>
+            <option>Raw materials</option>
+            <option>Finished goods</option>
+          </select>
+          <select>
+            <option>All warehouses</option>
+            <option>Warehouse 1</option>
+            <option>Warehouse 2</option>
+          </select>
+          <button>Edit</button>
+        </div>
+      </div>
 
-  <div class="panel">
-    <div class="line">SYSTEM STATUS: ACTIVE</div>
-    <div class="line">SUPPLIER RISK: MODERATE</div>
-    <div class="line">DEMAND TREND: INCREASING</div>
+      <div class="section-title">Inventory KPIs Overview</div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <h3>Inventory Value</h3>
+          <div class="value">$1.2M</div>
+          <div class="change">▲ 26% versus previous period</div>
+        </div>
+
+        <div class="kpi-card">
+          <h3>Inventory Turnover</h3>
+          <div class="value">5.8</div>
+          <div class="change negative">▼ 6.5% versus previous period</div>
+        </div>
+
+        <div class="kpi-card">
+          <h3>Days of Inventory Outstanding</h3>
+          <div class="value">60</div>
+          <div class="change">▲ 9% versus previous period</div>
+        </div>
+
+        <div class="kpi-card">
+          <h3>Obsolete Stock Percentage</h3>
+          <div class="value">8.5%</div>
+          <div class="change">▲ 18% versus previous period</div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Inventory Turnover</h3>
+        <canvas id="turnoverChart"></canvas>
+      </div>
+
+      <div class="section-title">Stock Breakdown</div>
+
+      <div class="bottom-grid">
+        <div class="chart-card small-chart">
+          <h3>Stock Levels</h3>
+          <canvas id="stockLevelChart"></canvas>
+        </div>
+
+        <div class="chart-card small-chart">
+          <h3>Days in Stock per Product Category</h3>
+          <canvas id="daysInStockChart"></canvas>
+        </div>
+
+        <div class="chart-card small-chart">
+          <h3>Stockout and Near Stockout Items</h3>
+          <canvas id="stockoutChart"></canvas>
+        </div>
+      </div>
+    </main>
   </div>
-</div>
 
+  <script>
+    const monthLabels = ["Jan 2024", "Feb 2024", "Mar 2024", "Apr 2024", "May 2024", "Jun 2024", "Jul 2024", "Aug 2024", "Sep 2024", "Oct 2024", "Nov 2024", "Dec 2024"];
+
+    new Chart(document.getElementById("turnoverChart"), {
+      type: "bar",
+      data: {
+        labels: monthLabels,
+        datasets: [
+          {
+            label: "Sales",
+            data: [120, 95, 178, 96, 112, 128, 69, 81, 116, 58, 72, 34],
+            backgroundColor: "#b14cff"
+          },
+          {
+            label: "Inventory",
+            data: [85, 41, 72, 57, 61, 75, 74, 68, 58, 47, 73, 35],
+            backgroundColor: "#2fd3a7"
+          },
+          {
+            label: "Inventory Turnover",
+            data: [10, 8.3, 7.8, 5.1, 4.9, 9.2, 7.3, 5.5, 3.2, 8.0, 5.9, 15.2],
+            type: "line",
+            borderColor: "#6f79ff",
+            backgroundColor: "#6f79ff",
+            yAxisID: "y1",
+            tension: 0.35,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top"
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: "Sales / Inventory"
+            }
+          },
+          y1: {
+            beginAtZero: true,
+            position: "right",
+            grid: {
+              drawOnChartArea: false
+            },
+            title: {
+              display: true,
+              text: "Inventory Turnover"
+            }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("stockLevelChart"), {
+      type: "bar",
+      data: {
+        labels: ["Warehouse 1", "Warehouse 2", "Warehouse 3", "Warehouse 4", "Warehouse 5", "Warehouse 6", "Warehouse 7"],
+        datasets: [
+          {
+            label: "Stock Level",
+            data: [72, 54, 88, 91, 61, 47, 95],
+            backgroundColor: ["#edd8ff", "#d9b6ff", "#c38dff", "#b14cff", "#cda9ff", "#e5d3ff", "#a03cff"]
+          }
+        ]
+      },
+      options: {
+        indexAxis: "y",
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("daysInStockChart"), {
+      type: "bar",
+      data: {
+        labels: ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5"],
+        datasets: [
+          {
+            label: "Days in Stock",
+            data: [111, 69, 61, 55, 17],
+            backgroundColor: "#2fd3a7"
+          }
+        ]
+      },
+      options: {
+        indexAxis: "y",
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("stockoutChart"), {
+      type: "bar",
+      data: {
+        labels: ["COMP-HYD", "CITR-001", "EXD-NS3", "CYM-VA1", "CUI-DTO", "CTL-ACK", "CLEA-M3", "C-SOL-088", "CTERG-C2"],
+        datasets: [
+          {
+            label: "Items",
+            data: [74, 72, 71, 69, 62, 59, 51, 44, 38],
+            backgroundColor: "#7d7cf4"
+          }
+        ]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>
