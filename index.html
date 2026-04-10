@@ -1,80 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Supply Chain Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-[#d9cec2] flex items-center justify-center min-h-screen">
+import { useState } from "react";
 
-<div class="w-[1200px] bg-[#0f1318] rounded-3xl shadow-2xl p-6 text-white">
-  
-  <!-- HEADER -->
-  <div class="flex justify-between items-center mb-6">
-    <div>
-      <p class="text-yellow-400 text-xs tracking-widest">AI SUPPLY CHAIN COMMAND CENTER</p>
-      <h1 class="text-3xl font-bold">Living Operations Dashboard</h1>
-    </div>
-    <div class="bg-[#1a2028] px-4 py-2 rounded-full text-sm">System Live</div>
-  </div>
+export default function AISupplyChainFutureDashboard() {
+  const [state, setState] = useState({
+    cost: 18,
+    lead: 4.2,
+    reliability: 96.4,
+    alerts: 3,
+  });
 
-  <!-- GRID -->
-  <div class="grid grid-cols-3 gap-4">
+  const simulateChange = () => {
+    setState({
+      cost: Math.floor(Math.random() * 30),
+      lead: (Math.random() * 6).toFixed(1),
+      reliability: (90 + Math.random() * 10).toFixed(1),
+      alerts: Math.floor(Math.random() * 5),
+    });
+  };
 
-    <!-- SIGNAL -->
-    <div class="bg-[#171c22] p-5 rounded-2xl">
-      <p class="text-gray-400 text-sm">Network Signal</p>
-      <div class="text-5xl text-yellow-300 mt-4 animate-pulse">76.3</div>
-      <p class="text-sm text-gray-400 mt-2">Global suppliers synchronized</p>
-    </div>
+  return (
+    <div className="min-h-screen bg-black text-white p-6">
+      <div className="max-w-6xl mx-auto">
 
-    <!-- STATS -->
-    <div class="bg-[#171c22] p-5 rounded-2xl">
-      <p class="text-gray-400 text-sm">Cost Risk</p>
-      <div class="text-3xl text-yellow-300">18%</div>
-      <p class="text-xs text-gray-500">Below threshold</p>
-    </div>
+        {/* HEADER */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <p className="text-yellow-400 text-xs tracking-widest">AI SUPPLY CHAIN COMMAND CENTER</p>
+            <h1 className="text-4xl font-bold">Future Operations Dashboard</h1>
+          </div>
 
-    <div class="bg-[#171c22] p-5 rounded-2xl">
-      <p class="text-gray-400 text-sm">Lead Time</p>
-      <div class="text-3xl text-yellow-300">4.2d</div>
-      <p class="text-xs text-gray-500">Avg delay</p>
-    </div>
+          <button
+            onClick={simulateChange}
+            className="bg-yellow-400 text-black px-6 py-2 rounded-full hover:scale-105 transition"
+          >
+            SAVE
+          </button>
+        </div>
 
-    <div class="bg-[#171c22] p-5 rounded-2xl">
-      <p class="text-gray-400 text-sm">Reliability</p>
-      <div class="text-3xl text-yellow-300">96.4</div>
-      <p class="text-xs text-gray-500">Performance score</p>
-    </div>
+        {/* GRID */}
+        <div className="grid grid-cols-4 gap-6">
 
-    <div class="bg-[#171c22] p-5 rounded-2xl">
-      <p class="text-gray-400 text-sm">Live Alerts</p>
-      <div class="text-3xl text-yellow-300">03</div>
-      <p class="text-xs text-gray-500">Events detected</p>
-    </div>
+          {[{
+            label: "Cost Risk",
+            value: state.cost + "%"
+          }, {
+            label: "Lead Time",
+            value: state.lead + "d"
+          }, {
+            label: "Reliability",
+            value: state.reliability
+          }, {
+            label: "Alerts",
+            value: state.alerts
+          }].map((item, i) => (
 
-    <!-- BAR CHART -->
-    <div class="bg-[#171c22] p-5 rounded-2xl col-span-2">
-      <p class="text-gray-400 text-sm mb-3">Demand Curve</p>
-      <div class="flex gap-3 h-40 items-end">
-        <div class="w-full bg-yellow-400 h-[40%] animate-pulse"></div>
-        <div class="w-full bg-yellow-400 h-[70%] animate-pulse"></div>
-        <div class="w-full bg-yellow-400 h-[55%] animate-pulse"></div>
-        <div class="w-full bg-yellow-400 h-[85%] animate-pulse"></div>
+            <div
+              key={i}
+              className="bg-[#111] p-6 rounded-2xl border border-yellow-500/20 relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-yellow-400 opacity-5 animate-pulse" />
+
+              <p className="text-gray-400 text-sm">{item.label}</p>
+              <div className="text-3xl text-yellow-300 mt-3 animate-pulse">
+                {item.value}
+              </div>
+            </div>
+
+          ))}
+
+        </div>
+
+        {/* CHART */}
+        <div className="mt-10 bg-[#111] p-6 rounded-2xl border border-yellow-500/20">
+          <p className="text-gray-400 mb-4">Live Demand Signal</p>
+
+          <div className="flex gap-3 h-40 items-end">
+            {[40, 70, 55, 85, 60, 90].map((h, i) => (
+              <div key={i} className="w-full bg-[#222] rounded">
+                <div
+                  className="bg-gradient-to-t from-yellow-500 to-yellow-200 rounded animate-pulse shadow-[0_0_20px_rgba(255,200,0,0.6)]"
+                  style={{ height: `${h}%` }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <!-- DECISION -->
-    <div class="bg-[#171c22] p-5 rounded-2xl">
-      <p class="text-gray-400 text-sm">Decision Engine</p>
-      <h2 class="text-xl mt-3">Shift 20% volume</h2>
-      <p class="text-xs text-gray-500 mt-2">Better reliability + lower risk</p>
-    </div>
-
-  </div>
-
-</div>
-
-</body>
-</html>
+  );
+}
