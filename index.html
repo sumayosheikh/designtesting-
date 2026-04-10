@@ -1,52 +1,228 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-body {
-  margin:0;
-  font-family: Arial;
-  background:#05080c;
-  color:#00ffcc;
+export default function AISupplyChainLivingDashboard() {
+  const stats = [
+    { label: "Cost Risk", value: "18%", sub: "Below threshold" },
+    { label: "Lead Time", value: "4.2d", sub: "Avg supplier delay" },
+    { label: "Reliability", value: "96.4", sub: "Performance score" },
+    { label: "Live Alerts", value: "03", sub: "Events detected" },
+  ];
+
+  const bars = [48, 76, 58, 84, 67, 92];
+  const line = [24, 38, 30, 54, 42, 68, 59, 81];
+
+  return (
+    <div className="min-h-screen bg-[#d9cec2] flex items-center justify-center p-6">
+      <div className="w-full max-w-[1400px] rounded-[34px] bg-[#101317] shadow-2xl overflow-hidden border border-[#2a2e35]">
+        <div className="grid grid-cols-[88px_1fr] min-h-[860px]">
+          <aside className="bg-[#0d1014] border-r border-[#1c2128] flex flex-col items-center py-6 justify-between relative">
+            <div className="absolute inset-y-8 left-1/2 -translate-x-1/2 w-[1px] bg-gradient-to-b from-transparent via-[#f0b76633] to-transparent" />
+            <div className="space-y-4 z-10">
+              <div className="w-11 h-11 rounded-2xl border border-[#e9b66f33] bg-[#171b22] flex items-center justify-center text-[#f1bd75] text-lg">⌂</div>
+              <div className="w-11 h-11 rounded-2xl bg-[#f1bd75] text-[#111] flex items-center justify-center font-semibold shadow-[0_0_30px_rgba(241,189,117,.35)] animate-pulse">AI</div>
+              <div className="w-11 h-11 rounded-2xl border border-[#262b33] bg-[#151920] flex items-center justify-center text-[#d4a35f]">◫</div>
+              <div className="w-11 h-11 rounded-2xl border border-[#262b33] bg-[#151920] flex items-center justify-center text-[#d4a35f]">◎</div>
+            </div>
+
+            <div className="space-y-4 z-10 flex flex-col items-center">
+              {['●','◌','✦','⚙'].map((icon, i) => (
+                <div
+                  key={i}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center border ${i===1 ? 'bg-[#f1bd75] text-black border-[#f6c987] shadow-[0_0_35px_rgba(241,189,117,.45)]' : 'bg-[#171b22] text-[#e7b26a] border-[#2a2f36]'}`}
+                >
+                  {icon}
+                </div>
+              ))}
+              <div className="w-12 h-12 rounded-full overflow-hidden border border-[#2f343d] bg-[#171b22]">
+                <div className="w-full h-full bg-gradient-to-br from-[#f0c27b] to-[#4f3e2d]" />
+              </div>
+            </div>
+          </aside>
+
+          <main className="p-6 md:p-7 bg-[radial-gradient(circle_at_top_left,rgba(241,189,117,.08),transparent_24%),linear-gradient(180deg,#12161c,#0e1116)] text-white">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <p className="text-[#f1bd75] uppercase tracking-[0.4em] text-xs mb-2">AI Supply Chain Command Center</p>
+                <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Living Operations Dashboard</h1>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full border border-[#2d323a] bg-[#181d24] flex items-center justify-center text-[#f1bd75]">⌕</div>
+                <div className="px-4 py-2 rounded-full bg-[#181d24] border border-[#2d323a] text-sm text-[#d2d7de]">
+                  System Live
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-12 gap-5 auto-rows-[120px]">
+              <section className="col-span-12 lg:col-span-3 row-span-3 rounded-[28px] bg-[#171b22] border border-[#262b33] p-5 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(241,189,117,.18),transparent_45%)] opacity-80" />
+                <div className="relative z-10">
+                  <p className="text-[#aeb6c2] text-sm mb-3">Network Signal</p>
+                  <div className="relative mx-auto mt-4 mb-6 w-52 h-52 rounded-full border border-[#f1bd7530] flex items-center justify-center">
+                    <div className="absolute inset-4 rounded-full border border-[#f1bd7540] animate-pulse" />
+                    <div className="absolute inset-10 rounded-full border border-[#f1bd7530]" />
+                    <div className="absolute inset-16 rounded-full bg-[radial-gradient(circle,#f3d7a4,#cab68e_40%,#5a5348_75%,transparent_76%)] opacity-85" />
+                    <span className="relative text-4xl font-light text-[#fff3dc]">76.3</span>
+                    {[0,1,2,3].map((i)=>(
+                      <span key={i} className="absolute w-3 h-3 rounded-full bg-[#f1bd75] shadow-[0_0_15px_rgba(241,189,117,.7)]" style={{top:["18%","50%","78%","50%"][i],left:["50%","83%","50%","16%"][i],transform:'translate(-50%,-50%)'}} />
+                    ))}
+                  </div>
+                  <div className="space-y-3">
+                    <p className="text-[#f1bd75] text-sm">Global suppliers synchronized</p>
+                    <div className="space-y-2 text-xs text-[#8f98a4]">
+                      <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f1bd75]" />Asia corridor active</div>
+                      <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f1bd75]" />Port scan updated</div>
+                      <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#f1bd75]" />Demand pulse stable</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="col-span-12 lg:col-span-5 row-span-2 rounded-[28px] bg-[#171b22] border border-[#262b33] p-5 relative overflow-hidden">
+                <div className="absolute -top-10 -right-8 w-48 h-48 rounded-full bg-[#f1bd7514] blur-3xl" />
+                <div className="grid grid-cols-2 gap-4 relative z-10">
+                  {stats.map((item, i) => (
+                    <div key={i} className="rounded-[22px] bg-[#12161d] border border-[#232832] p-4 min-h-[140px] flex flex-col justify-between">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#aab2bc] text-sm">{item.label}</span>
+                        <span className="w-3 h-3 rounded-full bg-[#f1bd75] animate-pulse" />
+                      </div>
+                      <div>
+                        <div className="text-4xl font-semibold text-[#fff4df] mb-1">{item.value}</div>
+                        <div className="text-xs text-[#88919c]">{item.sub}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="col-span-12 lg:col-span-4 row-span-3 rounded-[28px] bg-[#171b22] border border-[#262b33] p-5 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(241,189,117,.14),transparent_30%)]" />
+                <div className="relative z-10 h-full flex flex-col">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <p className="text-[#aeb6c2] text-sm">Global Flow Map</p>
+                      <h3 className="text-xl font-medium mt-1">Supplier network visibility</h3>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="w-8 h-8 rounded-full bg-[#12161d] border border-[#2a2f36] flex items-center justify-center text-[#f1bd75]">◌</span>
+                      <span className="w-8 h-8 rounded-full bg-[#12161d] border border-[#2a2f36] flex items-center justify-center text-[#f1bd75]">△</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 rounded-[22px] bg-[#11151b] border border-[#222833] relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-35 bg-[linear-gradient(transparent_96%,rgba(241,189,117,.08)_97%),linear-gradient(90deg,transparent_96%,rgba(241,189,117,.08)_97%)] bg-[size:28px_28px]" />
+                    <div className="absolute right-8 top-8 w-44 h-28 rounded-[45%] bg-[#f0d8aa] opacity-30 blur-[2px]" />
+                    <div className="absolute left-8 bottom-14 w-36 h-20 rounded-[55%] bg-[#d8c39a] opacity-25 blur-[2px]" />
+                    <div className="absolute left-[18%] top-[58%] w-[42%] h-[2px] bg-gradient-to-r from-transparent via-[#f1bd75] to-transparent animate-pulse" />
+                    <div className="absolute left-[58%] top-[36%] w-[2px] h-[36%] bg-gradient-to-b from-transparent via-[#f1bd75] to-transparent animate-pulse" />
+                    {[
+                      ['18%','58%'],['38%','58%'],['58%','36%'],['58%','70%'],['78%','36%']
+                    ].map(([l,t],i)=>(
+                      <div key={i} className="absolute w-3 h-3 rounded-full bg-[#f1bd75] shadow-[0_0_16px_rgba(241,189,117,.75)]" style={{left:l,top:t}} />
+                    ))}
+                    <div className="absolute bottom-5 right-4 flex gap-2">
+                      <div className="w-16 h-24 rounded-t-[50px] rounded-b-[14px] bg-gradient-to-t from-[#f1bd75] to-[#6d614e] opacity-80" />
+                      <div className="w-16 h-20 rounded-t-[50px] rounded-b-[14px] bg-gradient-to-t from-[#d9e2d2] to-[#596156] opacity-80" />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="col-span-12 lg:col-span-3 row-span-2 rounded-[28px] bg-[#171b22] border border-[#262b33] p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <p className="text-[#aeb6c2] text-sm">Demand Curve</p>
+                    <h3 className="text-lg font-medium">Volume pulse</h3>
+                  </div>
+                  <span className="text-[#f1bd75] text-sm">Live</span>
+                </div>
+                <div className="h-[180px] flex items-end gap-3">
+                  {bars.map((h, i) => (
+                    <div key={i} className="flex-1 rounded-full bg-[#12161d] border border-[#242a33] h-full flex items-end p-1">
+                      <div
+                        className="w-full rounded-full bg-gradient-to-t from-[#8c6a39] via-[#f1bd75] to-[#fde4b8] shadow-[0_0_20px_rgba(241,189,117,.25)] animate-pulse"
+                        style={{ height: `${h}%`, animationDelay: `${i * 120}ms` }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="col-span-12 lg:col-span-5 row-span-2 rounded-[28px] bg-[#171b22] border border-[#262b33] p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <p className="text-[#aeb6c2] text-sm">Supplier Feed</p>
+                    <h3 className="text-lg font-medium">Decision engine queue</h3>
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-[#12161d] border border-[#2a3038] text-[#f1bd75] text-xs">Processing</span>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    ['North Atlantic Freight','Stable route','92.8'],
+                    ['MedCore Components','Cost pressure','78.4'],
+                    ['Delta Industrial','Fastest lead time','95.1'],
+                    ['Axis BioSupply','Risk watch','69.3'],
+                  ].map(([name, note, score], i) => (
+                    <div key={i} className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-[18px] bg-[#12161d] border border-[#232832] px-4 py-3">
+                      <div>
+                        <div className="text-[#f3f5f7] text-sm font-medium">{name}</div>
+                        <div className="text-[#8b94a0] text-xs mt-1">{note}</div>
+                      </div>
+                      <div className="text-[#f1bd75] text-sm font-semibold">{score}</div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="col-span-12 lg:col-span-4 row-span-2 rounded-[28px] bg-[#171b22] border border-[#262b33] p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <p className="text-[#aeb6c2] text-sm">Command Gauge</p>
+                    <h3 className="text-lg font-medium">Operational readiness</h3>
+                  </div>
+                  <span className="w-3 h-3 rounded-full bg-[#f1bd75] animate-pulse" />
+                </div>
+                <div className="flex items-center justify-center h-[220px] relative">
+                  <div className="absolute w-56 h-56 rounded-full border-[18px] border-[#2a3038]" />
+                  <div className="absolute w-56 h-56 rounded-full border-[18px] border-transparent border-t-[#f1bd75] border-r-[#f1bd75] rotate-45 shadow-[0_0_35px_rgba(241,189,117,.18)]" />
+                  <div className="absolute w-44 h-44 rounded-full bg-[#11151b] border border-[#232832]" />
+                  <div className="text-center z-10">
+                    <div className="text-5xl font-semibold text-[#fff4df]">83.2</div>
+                    <div className="text-[#8c95a0] text-sm mt-2">system score</div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="col-span-12 row-span-1 rounded-[28px] bg-[#13171d] border border-[#262b33] p-5 overflow-hidden">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <p className="text-[#aeb6c2] text-sm">Forecast Drift</p>
+                    <h3 className="text-lg font-medium">Weekly demand movement</h3>
+                  </div>
+                  <span className="text-[#f1bd75] text-sm">+6.4%</span>
+                </div>
+                <div className="h-28 relative rounded-[20px] bg-[#11151b] border border-[#222833] overflow-hidden">
+                  <div className="absolute inset-0 opacity-30 bg-[linear-gradient(transparent_96%,rgba(241,189,117,.08)_97%),linear-gradient(90deg,transparent_96%,rgba(241,189,117,.08)_97%)] bg-[size:32px_32px]" />
+                  <svg viewBox="0 0 100 30" className="absolute inset-0 w-full h-full">
+                    <defs>
+                      <linearGradient id="lineGlow" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#8d6b3b" />
+                        <stop offset="50%" stopColor="#f1bd75" />
+                        <stop offset="100%" stopColor="#fde5bc" />
+                      </linearGradient>
+                    </defs>
+                    <polyline
+                      fill="rgba(241,189,117,0.08)"
+                      stroke="url(#lineGlow)"
+                      strokeWidth="0.8"
+                      points={line.map((v, i) => `${i * 14},${28 - v / 4}`).join(' ')}
+                    />
+                  </svg>
+                </div>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-.hero {
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-
-h1 {
-  font-size:60px;
-}
-
-.panel {
-  margin-top:40px;
-  width:70%;
-  background:#0d141c;
-  padding:30px;
-  border-radius:15px;
-}
-
-.line {
-  margin:10px 0;
-  border-bottom:1px solid #00ffcc33;
-}
-</style>
-</head>
-
-<body>
-
-<div class="hero">
-  <h1>AI COMMAND</h1>
-
-  <div class="panel">
-    <div class="line">SYSTEM STATUS: ACTIVE</div>
-    <div class="line">SUPPLIER RISK: MODERATE</div>
-    <div class="line">DEMAND TREND: INCREASING</div>
-  </div>
-</div>
-
-</body>
-</html>
