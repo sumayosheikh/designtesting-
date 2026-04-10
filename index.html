@@ -4,49 +4,53 @@
 <style>
 body {
   margin:0;
-  font-family: Georgia, serif;
-  background:#efe7dc;
-  color:#2f241d;
+  font-family: Arial;
+  background:#111;
+  color:white;
+  text-align:center;
 }
 
-.hero {
+.container {
   height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  text-align:center;
 }
 
-h1 {
-  font-size:80px;
-  letter-spacing:3px;
-}
-
-p {
-  color:#6b5c50;
-}
-
-.box {
-  margin-top:40px;
-  padding:30px;
+button {
+  padding:15px 30px;
+  margin-top:20px;
   background:white;
-  border-radius:20px;
-  width:60%;
+  border:none;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="hero">
-  <h1>SUMIYO</h1>
-  <p>Elegant systems. Quiet power.</p>
-
-  <div class="box">
-    This direction focuses on calm design with strong presence.
-  </div>
+<div class="container">
+  <h1 id="text">A supplier is failing.</h1>
+  <button onclick="next()">What do you do?</button>
 </div>
+
+<script>
+let steps = [
+  "You detect a delay.",
+  "Costs start rising.",
+  "Inventory runs low.",
+  "You switch suppliers.",
+  "You prevent a stockout."
+];
+
+let i = 0;
+
+function next() {
+  document.getElementById("text").innerText = steps[i];
+  i = (i + 1) % steps.length;
+}
+</script>
 
 </body>
 </html>
