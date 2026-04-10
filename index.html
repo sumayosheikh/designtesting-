@@ -5,12 +5,11 @@
 body {
   margin:0;
   font-family: Arial;
-  background:#111;
-  color:white;
-  text-align:center;
+  background:#05080c;
+  color:#00ffcc;
 }
 
-.container {
+.hero {
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -18,39 +17,36 @@ body {
   align-items:center;
 }
 
-button {
-  padding:15px 30px;
-  margin-top:20px;
-  background:white;
-  border:none;
-  cursor:pointer;
+h1 {
+  font-size:60px;
+}
+
+.panel {
+  margin-top:40px;
+  width:70%;
+  background:#0d141c;
+  padding:30px;
+  border-radius:15px;
+}
+
+.line {
+  margin:10px 0;
+  border-bottom:1px solid #00ffcc33;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <h1 id="text">A supplier is failing.</h1>
-  <button onclick="next()">What do you do?</button>
+<div class="hero">
+  <h1>AI COMMAND</h1>
+
+  <div class="panel">
+    <div class="line">SYSTEM STATUS: ACTIVE</div>
+    <div class="line">SUPPLIER RISK: MODERATE</div>
+    <div class="line">DEMAND TREND: INCREASING</div>
+  </div>
 </div>
-
-<script>
-let steps = [
-  "You detect a delay.",
-  "Costs start rising.",
-  "Inventory runs low.",
-  "You switch suppliers.",
-  "You prevent a stockout."
-];
-
-let i = 0;
-
-function next() {
-  document.getElementById("text").innerText = steps[i];
-  i = (i + 1) % steps.length;
-}
-</script>
 
 </body>
 </html>
