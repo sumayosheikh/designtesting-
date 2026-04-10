@@ -1,208 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sumiyo Command Center</title>
-
 <style>
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0f14;
-  color: #e8eef5;
+  margin:0;
+  font-family: Georgia, serif;
+  background:#efe7dc;
+  color:#2f241d;
 }
 
-/* NAV */
-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 40px;
-  background: #0e141b;
+.hero {
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
 }
 
-nav h2 {
-  letter-spacing: 2px;
+h1 {
+  font-size:80px;
+  letter-spacing:3px;
 }
 
-/* GRID LAYOUT */
-.container {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  padding: 30px;
+p {
+  color:#6b5c50;
 }
 
-/* METRIC CARDS */
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.card {
-  background: #111820;
-  padding: 20px;
-  border-radius: 15px;
-}
-
-.card h3 {
-  margin: 0;
-  font-size: 14px;
-  color: #aaa;
-}
-
-.card h1 {
-  margin: 10px 0 0;
-}
-
-/* PANEL */
-.panel {
-  background: #111820;
-  padding: 20px;
-  border-radius: 15px;
-}
-
-/* ALERTS */
-.feed-item {
-  padding: 10px;
-  border-bottom: 1px solid #222;
-}
-
-/* TOOL */
-input {
-  width: 100%;
-  margin: 10px 0;
-}
-
-/* RECOMMENDATION BOX */
-.recommendation {
-  margin-top: 15px;
-  padding: 15px;
-  background: #1a222c;
-  border-radius: 10px;
-  color: #8fe3a1;
+.box {
+  margin-top:40px;
+  padding:30px;
+  background:white;
+  border-radius:20px;
+  width:60%;
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <h2>SUMIYO COMMAND</h2>
-</nav>
+<div class="hero">
+  <h1>SUMIYO</h1>
+  <p>Elegant systems. Quiet power.</p>
 
-<div class="container">
-
-  <!-- LEFT SIDE -->
-  <div>
-
-    <!-- METRICS -->
-    <div class="metrics">
-      <div class="card">
-        <h3>Cost Risk</h3>
-        <h1 id="costRisk">--</h1>
-      </div>
-
-      <div class="card">
-        <h3>Lead Time</h3>
-        <h1 id="leadTime">--</h1>
-      </div>
-
-      <div class="card">
-        <h3>Reliability</h3>
-        <h1 id="relScore">--</h1>
-      </div>
-    </div>
-
-    <!-- TOOL -->
-    <div class="panel">
-      <h3>Supplier Decision Engine</h3>
-
-      <label>Cost</label>
-      <input type="range" id="cost" min="10" max="100">
-
-      <label>Speed</label>
-      <input type="range" id="speed" min="1" max="30">
-
-      <label>Reliability</label>
-      <input type="range" id="reliability" min="50" max="100">
-
-      <h3 id="score">Score: --</h3>
-
-      <div class="recommendation" id="recommendation">
-        Waiting for input...
-      </div>
-    </div>
-
+  <div class="box">
+    This direction focuses on calm design with strong presence.
   </div>
-
-  <!-- RIGHT SIDE -->
-  <div class="panel">
-    <h3>Live Alerts</h3>
-    <div id="feed"></div>
-  </div>
-
 </div>
-
-<script>
-
-/* ALERT FEED */
-const alerts = [
-  "Supplier delay risk ↑",
-  "Inventory imbalance detected",
-  "Cost spike on vendor",
-  "Demand surge forecasted",
-  "Route congestion warning"
-];
-
-setInterval(() => {
-  let item = document.createElement("div");
-  item.className = "feed-item";
-  item.innerText = alerts[Math.floor(Math.random() * alerts.length)];
-
-  let feed = document.getElementById("feed");
-  feed.prepend(item);
-
-  if (feed.children.length > 6) {
-    feed.lastChild.remove();
-  }
-}, 2000);
-
-
-/* DECISION ENGINE */
-function calculate() {
-  let cost = document.getElementById("cost").value;
-  let speed = document.getElementById("speed").value;
-  let reliability = document.getElementById("reliability").value;
-
-  let score = (100 - cost)*0.4 + (30 - speed)*0.3 + reliability*0.3;
-
-  document.getElementById("score").innerText =
-    "Score: " + score.toFixed(2);
-
-  document.getElementById("costRisk").innerText = cost;
-  document.getElementById("leadTime").innerText = speed + "d";
-  document.getElementById("relScore").innerText = reliability + "%";
-
-  let rec = "";
-
-  if (score > 75) {
-    rec = "✅ Strong supplier — recommended for primary sourcing.";
-  } else if (score > 50) {
-    rec = "⚠️ Moderate risk — consider backup supplier.";
-  } else {
-    rec = "❌ High risk — not recommended.";
-  }
-
-  document.getElementById("recommendation").innerText = rec;
-}
-
-document.querySelectorAll("input").forEach(i => {
-  i.addEventListener("input", calculate);
-});
-
-</script>
 
 </body>
 </html>
