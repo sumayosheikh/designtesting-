@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sumiyo Lab</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f14;
+  color: #e8eef5;
+}
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background: rgba(10,15,20,0.7);
+  backdrop-filter: blur(10px);
+}
+
+nav h2 {
+  letter-spacing: 2px;
+}
+
+nav a {
+  color: #aaa;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+/* HERO */
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 70px;
+}
+
+.hero p {
+  color: #aaa;
+}
+
+/* LIVE PANEL */
+.panel {
+  margin: 50px auto;
+  width: 80%;
+  background: #111820;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+/* ALERT FEED */
+#feed {
+  margin-top: 20px;
+}
+
+.feed-item {
+  padding: 10px;
+  border-bottom: 1px solid #222;
+}
+
+/* TOOL */
+.tool {
+  margin-top: 30px;
+}
+
+input {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.result {
+  margin-top: 10px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <h2>SUMIYO LAB</h2>
+  <div>
+    <a href="#">Home</a>
+    <a href="#">Experiments</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>AI Supply Chain Lab</h1>
+  <p>Testing systems. Building decisions. Breaking ideas.</p>
+</section>
+
+<div class="panel">
+  <h3>Live System Feed</h3>
+  <div id="feed"></div>
+
+  <div class="tool">
+    <h3>Supplier Score Tool</h3>
+
+    <label>Cost</label>
+    <input type="range" id="cost" min="10" max="100">
+
+    <label>Speed</label>
+    <input type="range" id="speed" min="1" max="30">
+
+    <label>Reliability</label>
+    <input type="range" id="reliability" min="50" max="100">
+
+    <div class="result" id="result">Score: --</div>
+  </div>
+</div>
+
+<script>
+/* ALERT FEED */
+const alerts = [
+  "Supplier delay risk ↑",
+  "Inventory imbalance detected",
+  "Cost spike detected",
+  "Demand surge forecasted",
+  "Logistics disruption"
+];
+
+setInterval(() => {
+  let item = document.createElement("div");
+  item.className = "feed-item";
+  item.innerText = alerts[Math.floor(Math.random() * alerts.length)];
+
+  let feed = document.getElementById("feed");
+  feed.prepend(item);
+
+  if (feed.children.length > 6) {
+    feed.lastChild.remove();
+  }
+}, 2000);
+
+/* TOOL */
+function calc() {
+  let cost = document.getElementById("cost").value;
+  let speed = document.getElementById("speed").value;
+  let reliability = document.getElementById("reliability").value;
+
+  let score = (100 - cost)*0.4 + (30 - speed)*0.3 + reliability*0.3;
+
+  document.getElementById("result").innerText =
+    "Score: " + score.toFixed(2);
+}
+
+document.querySelectorAll("input").forEach(i => {
+  i.addEventListener("input", calc);
+});
+</script>
+
+</body>
+</html>
