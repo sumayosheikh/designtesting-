@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sumiyo Lab</title>
+<title>Sumiyo Command Center</title>
 
 <style>
 body {
@@ -18,70 +18,70 @@ nav {
   display: flex;
   justify-content: space-between;
   padding: 20px 40px;
-  background: rgba(10,15,20,0.7);
-  backdrop-filter: blur(10px);
+  background: #0e141b;
 }
 
 nav h2 {
   letter-spacing: 2px;
 }
 
-nav a {
-  color: #aaa;
-  margin-left: 20px;
-  text-decoration: none;
-}
-
-/* HERO */
-.hero {
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: 70px;
-}
-
-.hero p {
-  color: #aaa;
-}
-
-/* LIVE PANEL */
-.panel {
-  margin: 50px auto;
-  width: 80%;
-  background: #111820;
-  border-radius: 20px;
+/* GRID LAYOUT */
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
   padding: 30px;
 }
 
-/* ALERT FEED */
-#feed {
-  margin-top: 20px;
+/* METRIC CARDS */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
 }
 
+.card {
+  background: #111820;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.card h1 {
+  margin: 10px 0 0;
+}
+
+/* PANEL */
+.panel {
+  background: #111820;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* ALERTS */
 .feed-item {
   padding: 10px;
   border-bottom: 1px solid #222;
 }
 
 /* TOOL */
-.tool {
-  margin-top: 30px;
-}
-
 input {
   width: 100%;
   margin: 10px 0;
 }
 
-.result {
-  margin-top: 10px;
-  font-weight: bold;
+/* RECOMMENDATION BOX */
+.recommendation {
+  margin-top: 15px;
+  padding: 15px;
+  background: #1a222c;
+  border-radius: 10px;
+  color: #8fe3a1;
 }
 </style>
 </head>
@@ -89,46 +89,71 @@ input {
 <body>
 
 <nav>
-  <h2>SUMIYO LAB</h2>
-  <div>
-    <a href="#">Home</a>
-    <a href="#">Experiments</a>
-  </div>
+  <h2>SUMIYO COMMAND</h2>
 </nav>
 
-<section class="hero">
-  <h1>AI Supply Chain Lab</h1>
-  <p>Testing systems. Building decisions. Breaking ideas.</p>
-</section>
+<div class="container">
 
-<div class="panel">
-  <h3>Live System Feed</h3>
-  <div id="feed"></div>
+  <!-- LEFT SIDE -->
+  <div>
 
-  <div class="tool">
-    <h3>Supplier Score Tool</h3>
+    <!-- METRICS -->
+    <div class="metrics">
+      <div class="card">
+        <h3>Cost Risk</h3>
+        <h1 id="costRisk">--</h1>
+      </div>
 
-    <label>Cost</label>
-    <input type="range" id="cost" min="10" max="100">
+      <div class="card">
+        <h3>Lead Time</h3>
+        <h1 id="leadTime">--</h1>
+      </div>
 
-    <label>Speed</label>
-    <input type="range" id="speed" min="1" max="30">
+      <div class="card">
+        <h3>Reliability</h3>
+        <h1 id="relScore">--</h1>
+      </div>
+    </div>
 
-    <label>Reliability</label>
-    <input type="range" id="reliability" min="50" max="100">
+    <!-- TOOL -->
+    <div class="panel">
+      <h3>Supplier Decision Engine</h3>
 
-    <div class="result" id="result">Score: --</div>
+      <label>Cost</label>
+      <input type="range" id="cost" min="10" max="100">
+
+      <label>Speed</label>
+      <input type="range" id="speed" min="1" max="30">
+
+      <label>Reliability</label>
+      <input type="range" id="reliability" min="50" max="100">
+
+      <h3 id="score">Score: --</h3>
+
+      <div class="recommendation" id="recommendation">
+        Waiting for input...
+      </div>
+    </div>
+
   </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="panel">
+    <h3>Live Alerts</h3>
+    <div id="feed"></div>
+  </div>
+
 </div>
 
 <script>
+
 /* ALERT FEED */
 const alerts = [
   "Supplier delay risk ↑",
   "Inventory imbalance detected",
-  "Cost spike detected",
+  "Cost spike on vendor",
   "Demand surge forecasted",
-  "Logistics disruption"
+  "Route congestion warning"
 ];
 
 setInterval(() => {
@@ -144,21 +169,39 @@ setInterval(() => {
   }
 }, 2000);
 
-/* TOOL */
-function calc() {
+
+/* DECISION ENGINE */
+function calculate() {
   let cost = document.getElementById("cost").value;
   let speed = document.getElementById("speed").value;
   let reliability = document.getElementById("reliability").value;
 
   let score = (100 - cost)*0.4 + (30 - speed)*0.3 + reliability*0.3;
 
-  document.getElementById("result").innerText =
+  document.getElementById("score").innerText =
     "Score: " + score.toFixed(2);
+
+  document.getElementById("costRisk").innerText = cost;
+  document.getElementById("leadTime").innerText = speed + "d";
+  document.getElementById("relScore").innerText = reliability + "%";
+
+  let rec = "";
+
+  if (score > 75) {
+    rec = "✅ Strong supplier — recommended for primary sourcing.";
+  } else if (score > 50) {
+    rec = "⚠️ Moderate risk — consider backup supplier.";
+  } else {
+    rec = "❌ High risk — not recommended.";
+  }
+
+  document.getElementById("recommendation").innerText = rec;
 }
 
 document.querySelectorAll("input").forEach(i => {
-  i.addEventListener("input", calc);
+  i.addEventListener("input", calculate);
 });
+
 </script>
 
 </body>
