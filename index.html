@@ -437,6 +437,29 @@
       <div class="ticker">⚠ Freight cost variance is running 18% above baseline this week. Recommended action: prioritize stable suppliers and rebalance orders away from high-delay lanes.</div>
 
       <section class="grid">
+        <div class="card metric clickable-metric" onclick="showMetricDetail('risk')">
+  <div class="label">Supplier Risk Score</div>
+  <div class="value" id="riskScore">72 / 100</div>
+  <div class="delta warn">Click to inspect supplier risk</div>
+</div>
+
+<div class="card metric clickable-metric" onclick="showMetricDetail('stockout')">
+  <div class="label">Stockout Probability</div>
+  <div class="value" id="stockout">18%</div>
+  <div class="delta down">Click to inspect inventory exposure</div>
+</div>
+
+<div class="card metric clickable-metric" onclick="showMetricDetail('delivery')">
+  <div class="label">On-Time Delivery</div>
+  <div class="value" id="delivery">91.4%</div>
+  <div class="delta">Click to inspect delivery performance</div>
+</div>
+
+<div class="card metric clickable-metric" onclick="showMetricDetail('confidence')">
+  <div class="label">Decision Confidence</div>
+  <div class="value" id="confidence">84%</div>
+  <div class="delta">Click to inspect recommendation logic</div>
+</div>
         <div class="card metric">
           <div class="label">Supplier Risk Score</div>
           <div class="value" id="riskScore">72 / 100</div> 
