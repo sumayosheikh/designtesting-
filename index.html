@@ -1,91 +1,253 @@
-import { useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Supply Chain Command Center</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #d8cec4;
+    }
 
-export default function AISupplyChainFutureDashboard() {
-  const [state, setState] = useState({
-    cost: 18,
-    lead: 4.2,
-    reliability: 96.4,
-    alerts: 3,
-  });
+    .glass {
+      background: linear-gradient(180deg, #11151b 0%, #0d1015 100%);
+      border: 1px solid rgba(255, 214, 122, 0.12);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+    }
 
-  const simulateChange = () => {
-    setState({
-      cost: Math.floor(Math.random() * 30),
-      lead: (Math.random() * 6).toFixed(1),
-      reliability: (90 + Math.random() * 10).toFixed(1),
-      alerts: Math.floor(Math.random() * 5),
-    });
-  };
+    .card {
+      background: #151a21;
+      border: 1px solid rgba(255, 214, 122, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
 
-  return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <div className="max-w-6xl mx-auto">
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255, 210, 110, 0.08), transparent 45%);
+      pointer-events: none;
+    }
 
-        {/* HEADER */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <p className="text-yellow-400 text-xs tracking-widest">AI SUPPLY CHAIN COMMAND CENTER</p>
-            <h1 className="text-4xl font-bold">Future Operations Dashboard</h1>
-          </div>
+    .signal {
+      animation: pulseGlow 1.8s infinite ease-in-out;
+    }
 
-          <button
-            onClick={simulateChange}
-            className="bg-yellow-400 text-black px-6 py-2 rounded-full hover:scale-105 transition"
-          >
-            SAVE
-          </button>
+    .bar {
+      background: linear-gradient(to top, #8b6b2f, #f2c76b, #fff0bf);
+      box-shadow: 0 0 18px rgba(255, 210, 110, 0.45);
+      animation: flicker 1.8s infinite ease-in-out;
+      transform-origin: bottom;
+    }
+
+    .bar-track {
+      background: #20262f;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        opacity: 0.85;
+        filter: drop-shadow(0 0 6px rgba(255, 210, 110, 0.35));
+      }
+      50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 18px rgba(255, 210, 110, 0.8));
+      }
+    }
+
+    @keyframes flicker {
+      0%, 100% {
+        opacity: 0.88;
+        box-shadow: 0 0 14px rgba(255, 210, 110, 0.35);
+      }
+      25% {
+        opacity: 1;
+        box-shadow: 0 0 24px rgba(255, 210, 110, 0.65);
+      }
+      50% {
+        opacity: 0.92;
+        box-shadow: 0 0 18px rgba(255, 210, 110, 0.45);
+      }
+      75% {
+        opacity: 1;
+        box-shadow: 0 0 28px rgba(255, 210, 110, 0.8);
+      }
+    }
+
+    .fade-number {
+      animation: numberFlash 0.45s ease;
+    }
+
+    @keyframes numberFlash {
+      0% { opacity: 0.4; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .save-btn {
+      background: linear-gradient(135deg, #f2c76b, #e7b552);
+      color: #111;
+      transition: 0.25s ease;
+      box-shadow: 0 0 22px rgba(255, 210, 110, 0.2);
+    }
+
+    .save-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 0 30px rgba(255, 210, 110, 0.35);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+  <div class="glass w-full max-w-6xl rounded-[32px] p-6 text-white">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+      <div>
+        <p class="text-[11px] tracking-[0.35em] text-yellow-300 uppercase mb-2">
+          AI Supply Chain Command Center
+        </p>
+        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">
+          Future Operations Dashboard
+        </h1>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="px-4 py-2 rounded-full bg-[#181d24] border border-white/5 text-sm text-zinc-300">
+          System Live
         </div>
-
-        {/* GRID */}
-        <div className="grid grid-cols-4 gap-6">
-
-          {[{
-            label: "Cost Risk",
-            value: state.cost + "%"
-          }, {
-            label: "Lead Time",
-            value: state.lead + "d"
-          }, {
-            label: "Reliability",
-            value: state.reliability
-          }, {
-            label: "Alerts",
-            value: state.alerts
-          }].map((item, i) => (
-
-            <div
-              key={i}
-              className="bg-[#111] p-6 rounded-2xl border border-yellow-500/20 relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-yellow-400 opacity-5 animate-pulse" />
-
-              <p className="text-gray-400 text-sm">{item.label}</p>
-              <div className="text-3xl text-yellow-300 mt-3 animate-pulse">
-                {item.value}
-              </div>
-            </div>
-
-          ))}
-
-        </div>
-
-        {/* CHART */}
-        <div className="mt-10 bg-[#111] p-6 rounded-2xl border border-yellow-500/20">
-          <p className="text-gray-400 mb-4">Live Demand Signal</p>
-
-          <div className="flex gap-3 h-40 items-end">
-            {[40, 70, 55, 85, 60, 90].map((h, i) => (
-              <div key={i} className="w-full bg-[#222] rounded">
-                <div
-                  className="bg-gradient-to-t from-yellow-500 to-yellow-200 rounded animate-pulse shadow-[0_0_20px_rgba(255,200,0,0.6)]"
-                  style={{ height: `${h}%` }}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
+        <button id="saveBtn" class="save-btn px-6 py-2 rounded-full font-semibold">
+          SAVE
+        </button>
       </div>
     </div>
-  );
-}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+      <div class="card rounded-3xl p-5">
+        <p class="text-zinc-400 text-sm mb-3">Cost Risk</p>
+        <div id="cost" class="text-4xl text-yellow-200 font-semibold signal">18%</div>
+      </div>
+
+      <div class="card rounded-3xl p-5">
+        <p class="text-zinc-400 text-sm mb-3">Lead Time</p>
+        <div id="lead" class="text-4xl text-yellow-200 font-semibold signal">4.2d</div>
+      </div>
+
+      <div class="card rounded-3xl p-5">
+        <p class="text-zinc-400 text-sm mb-3">Reliability</p>
+        <div id="reliability" class="text-4xl text-yellow-200 font-semibold signal">96.4</div>
+      </div>
+
+      <div class="card rounded-3xl p-5">
+        <p class="text-zinc-400 text-sm mb-3">Alerts</p>
+        <div id="alerts" class="text-4xl text-yellow-200 font-semibold signal">3</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+      <div class="card rounded-3xl p-5 xl:col-span-2">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-zinc-400 text-sm">Live Demand Signal</p>
+            <h2 class="text-xl font-medium mt-1">Volume Response</h2>
+          </div>
+          <span class="text-yellow-300 text-sm">Active</span>
+        </div>
+
+        <div id="chart" class="h-56 flex items-end gap-3">
+          <div class="bar-track h-full flex-1 rounded-full p-1"><div class="bar w-full rounded-full h-[40%]" style="animation-delay:0ms"></div></div>
+          <div class="bar-track h-full flex-1 rounded-full p-1"><div class="bar w-full rounded-full h-[70%]" style="animation-delay:120ms"></div></div>
+          <div class="bar-track h-full flex-1 rounded-full p-1"><div class="bar w-full rounded-full h-[55%]" style="animation-delay:240ms"></div></div>
+          <div class="bar-track h-full flex-1 rounded-full p-1"><div class="bar w-full rounded-full h-[85%]" style="animation-delay:360ms"></div></div>
+          <div class="bar-track h-full flex-1 rounded-full p-1"><div class="bar w-full rounded-full h-[60%]" style="animation-delay:480ms"></div></div>
+          <div class="bar-track h-full flex-1 rounded-full p-1"><div class="bar w-full rounded-full h-[90%]" style="animation-delay:600ms"></div></div>
+        </div>
+      </div>
+
+      <div class="card rounded-3xl p-5">
+        <p class="text-zinc-400 text-sm mb-2">Decision Engine</p>
+        <h2 id="decisionTitle" class="text-2xl font-semibold text-yellow-100 mb-3">
+          Shift 20% volume
+        </h2>
+        <p id="decisionText" class="text-sm text-zinc-400 leading-6">
+          Better reliability-to-cost balance with lower stockout exposure.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const costEl = document.getElementById("cost");
+    const leadEl = document.getElementById("lead");
+    const reliabilityEl = document.getElementById("reliability");
+    const alertsEl = document.getElementById("alerts");
+    const bars = document.querySelectorAll(".bar");
+    const decisionTitle = document.getElementById("decisionTitle");
+    const decisionText = document.getElementById("decisionText");
+    const saveBtn = document.getElementById("saveBtn");
+
+    const scenarios = [
+      {
+        cost: "18%",
+        lead: "4.2d",
+        reliability: "96.4",
+        alerts: "3",
+        bars: [40, 70, 55, 85, 60, 90],
+        title: "Shift 20% volume",
+        text: "Better reliability-to-cost balance with lower stockout exposure."
+      },
+      {
+        cost: "24%",
+        lead: "5.1d",
+        reliability: "92.8",
+        alerts: "4",
+        bars: [55, 62, 48, 76, 58, 72],
+        title: "Reduce supplier concentration",
+        text: "Risk is rising across one vendor lane. Diversify sourcing to stabilize fulfillment."
+      },
+      {
+        cost: "12%",
+        lead: "3.6d",
+        reliability: "97.9",
+        alerts: "1",
+        bars: [35, 58, 66, 79, 74, 88],
+        title: "Increase replenishment pace",
+        text: "Shorter lead times and stronger reliability support faster inventory turns."
+      },
+      {
+        cost: "21%",
+        lead: "6.0d",
+        reliability: "90.7",
+        alerts: "5",
+        bars: [62, 45, 71, 54, 83, 60],
+        title: "Trigger risk review",
+        text: "Escalating delays and alert volume suggest immediate intervention is needed."
+      }
+    ];
+
+    let current = 0;
+
+    function flash(el, value) {
+      el.classList.remove("fade-number");
+      void el.offsetWidth;
+      el.textContent = value;
+      el.classList.add("fade-number");
+    }
+
+    saveBtn.addEventListener("click", () => {
+      current = (current + 1) % scenarios.length;
+      const s = scenarios[current];
+
+      flash(costEl, s.cost);
+      flash(leadEl, s.lead);
+      flash(reliabilityEl, s.reliability);
+      flash(alertsEl, s.alerts);
+      flash(decisionTitle, s.title);
+      flash(decisionText, s.text);
+
+      bars.forEach((bar, i) => {
+        bar.style.height = s.bars[i] + "%";
+      });
+    });
+  </script>
+</body>
+</html>
