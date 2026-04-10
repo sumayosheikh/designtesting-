@@ -727,6 +727,21 @@
       }
     });
   </script>
+  <script>
+function updateDashboard() {
+  let risk = Math.floor(Math.random() * 20) + 65;
+  let stockout = (Math.random() * 10 + 10).toFixed(1);
+  let delivery = (Math.random() * 5 + 88).toFixed(1);
+  let confidence = Math.floor(Math.random() * 10) + 80;
+
+  document.getElementById("riskScore").innerText = risk + " / 100";
+  document.getElementById("stockout").innerText = stockout + "%";
+  document.getElementById("delivery").innerText = delivery + "%";
+  document.getElementById("confidence").innerText = confidence + "%";
+}
+
+setInterval(updateDashboard, 5000);
+</script>
 </body>
 </html>
 
