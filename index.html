@@ -1,2 +1,175 @@
+/* =========================
+   FONT + COLOR SYSTEM
+   ========================= */
 
+/* Font stack */
+:root {
+  --font-main: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  /* Backgrounds */
+  --bg-main: #07111f;
+  --bg-secondary: #0b1728;
+  --card-bg: rgba(15, 28, 48, 0.78);
+  --card-border: rgba(120, 170, 255, 0.16);
+
+  /* Text */
+  --text-primary: #f3f7ff;
+  --text-secondary: #9fb3c8;
+  --text-muted: #6f8399;
+
+  /* Accent colors */
+  --accent-blue: #69a7ff;
+  --accent-cyan: #57e3ff;
+  --accent-purple: #8f7cff;
+  --accent-green: #4ee29a;
+  --accent-warning: #ffb86b;
+  --accent-danger: #ff6f91;
+
+  /* Glow / lighting */
+  --glow-blue: 0 0 30px rgba(87, 227, 255, 0.16);
+  --glow-soft: 0 10px 35px rgba(0, 0, 0, 0.28);
+  --glow-card: 0 8px 25px rgba(80, 140, 255, 0.10);
+
+  /* Gradients */
+  --panel-gradient: linear-gradient(
+    135deg,
+    rgba(103, 168, 255, 0.12),
+    rgba(87, 227, 255, 0.06),
+    rgba(143, 124, 255, 0.08)
+  );
+
+  --button-gradient: linear-gradient(
+    135deg,
+    #5ea8ff,
+    #57e3ff
+  );
+
+  --border-glow: linear-gradient(
+    135deg,
+    rgba(105, 167, 255, 0.45),
+    rgba(87, 227, 255, 0.18),
+    rgba(143, 124, 255, 0.22)
+  );
+}
+
+/* Page */
+body {
+  font-family: var(--font-main);
+  background:
+    radial-gradient(circle at top left, rgba(87, 227, 255, 0.08), transparent 30%),
+    radial-gradient(circle at top right, rgba(143, 124, 255, 0.10), transparent 28%),
+    linear-gradient(180deg, #08111d 0%, #0a1422 45%, #07111f 100%);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+/* Secondary text */
+p, span, label, small {
+  color: var(--text-secondary);
+}
+
+/* Dashboard cards */
+.dashboard-card {
+  background: var(--panel-gradient), var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 22px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--glow-soft), var(--glow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  padding: 1px;
+  background: var(--border-glow);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Buttons / active controls */
+.dashboard-btn,
+.dashboard-filter,
+.dashboard-select {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  background: rgba(14, 27, 46, 0.88);
+  border: 1px solid rgba(105, 167, 255, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+}
+
+.dashboard-btn:hover,
+.dashboard-filter:hover,
+.dashboard-select:hover {
+  border-color: rgba(87, 227, 255, 0.35);
+  box-shadow: 0 0 18px rgba(87, 227, 255, 0.10);
+}
+
+/* Primary button */
+.primary-btn {
+  background: var(--button-gradient);
+  color: #08111d;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 10px 24px rgba(87, 227, 255, 0.22);
+}
+
+/* KPI numbers */
+.kpi-value {
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+/* Small labels */
+.kpi-label,
+.section-label {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+/* Accent states */
+.status-good { color: var(--accent-green); }
+.status-warning { color: var(--accent-warning); }
+.status-risk { color: var(--accent-danger); }
+
+/* Dropdown menu */
+select,
+.custom-dropdown {
+  background: rgba(10, 21, 36, 0.95);
+  color: var(--text-primary);
+  border: 1px solid rgba(105, 167, 255, 0.18);
+  border-radius: 12px;
+  font-family: var(--font-main);
+}
+
+/* Optional glow line for sections */
+.section-glow {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(87, 227, 255, 0.35),
+    transparent
+  );
+  box-shadow: var(--glow-blue);
+}
 
