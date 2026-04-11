@@ -420,18 +420,32 @@
     </aside>
 
     <main class="content">
-      <section class="topbar" id="overview">
-        <div class="title-wrap">
-          <span class="eyebrow">Operations dashboard</span>
-          <h2>AI Supply Chain Command Center</h2>
-          <p>This Page Translates Raw Supply Chain Signals Into Manager Ready insight: Where Risk Is Rising, Which Suppliers Need Attention, & What Action Creates The Best Balance Between Cost, Speed, & Reliability.</p>
-        </div>
-        <div class="actions">
-          <div class="chip">Last 12 months</div>
-          <div class="chip">North America network</div>
-          <div class="chip">12 monitored SKUs</div>
-          <a class="btn primary" href="#simulator">Run scenario</a>
-        </div>
+      <div class="filter-bar">
+  <select id="timeFilter">
+    <option>Last 30 days</option>
+    <option>Last 3 months</option>
+    <option>Last 6 months</option>
+    <option>Last 12 months</option>
+  </select>
+
+  <select id="materialFilter">
+    <option>Raw materials</option>
+    <option>Packaging materials</option>
+    <option>Finished goods</option>
+    <option>Electronic components</option>
+    <option>Medical supplies</option>
+  </select>
+
+  <select id="warehouseFilter">
+    <option>Warehouse 1</option>
+    <option>Warehouse 2</option>
+    <option>Warehouse 3</option>
+    <option>Warehouse 4</option>
+    <option>All Warehouses</option>
+  </select>
+
+  <button class="filter-btn">Edit</button>
+</div>
       </section>
 
       <div class="ticker">⚠ Freight cost variance is running 18% above baseline this week. Recommended action: prioritize stable suppliers and rebalance orders away from high-delay lanes.</div>
