@@ -6,6 +6,47 @@
   <title>AI Supply Chain Command Center</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
+    .filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 18px;
+  align-items: center;
+}
+
+.filter-bar select,
+.filter-btn {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.filter-bar select {
+  min-width: 170px;
+}
+
+.filter-bar select:focus {
+  border-color: rgba(124,156,255,0.45);
+  box-shadow: 0 0 0 3px rgba(124,156,255,0.12);
+}
+
+.filter-btn {
+  background: linear-gradient(135deg, #ff4fc3, #ff3ea5);
+  border: none;
+  font-weight: 700;
+  color: white;
+}
+
+.filter-btn:hover {
+  opacity: 0.92;
+} .filter-bar option {
+  color: black;
+}
     :root {
       --bg: #08111f;
       --panel: #0f1b2d;
